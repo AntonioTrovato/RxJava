@@ -5,7 +5,7 @@ name: Snapshot
 
 on:
   push:
-    branches: [ '3.x' ]
+    branches: [ 'main' ]
     
 permissions:
   contents: read
