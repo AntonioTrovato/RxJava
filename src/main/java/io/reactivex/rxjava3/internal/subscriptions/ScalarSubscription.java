@@ -62,7 +62,6 @@ public final class ScalarSubscription<T> extends AtomicInteger implements QueueS
 
     @Override
     public void cancel() {
-        System.out.println("hey");
         lazySet(CANCELLED);
     }
 
