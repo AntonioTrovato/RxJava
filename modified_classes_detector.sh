@@ -146,7 +146,7 @@ echo "Class names written to $OUTPUT_FILE"
 echo "sono qui"
 java -jar ju-to-jmh/converter-all.jar src/test/java/ build/classes/java/test/ src/jmh/java/ --class-names-file=src/jmh/java/benchmark_classes_to_generate.txt
 echo "sono qui2"
-gradlew jmhJar
+./gradlew jmhJar
 
 # List available benchmarks
 java -jar build/libs/rxjava-3.0.0-SNAPSHOT-jmh.jar -l
