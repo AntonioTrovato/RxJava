@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 public class ASTGenerator {
 
     /**
-     *
+     * Main method
      * @param args filepath of a .txt file with the list of classes to inspect
      */
     public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class ASTGenerator {
 
             for (String className : modifiedClasses) {
                 String filePathJava = className.replace('.', '/') + ".java";
-                String currentFullPath = "./app/src/main/java/" + filePathJava;
+                String currentFullPath = "src/main/java/" + filePathJava;
 
                 // Make the current version AST
                 List<MethodDeclaration> currentMethods = createASTFromFile(javaParser, currentFullPath, "Current", className);
@@ -308,7 +308,7 @@ public class ASTGenerator {
      */
     private static String getPreviousCommitContent(String filePathJava) {
         try {
-            Process process = new ProcessBuilder("git", "show", "HEAD^:" + "app/src/main/java/" + filePathJava).start();
+            Process process = new ProcessBuilder("git", "show", "HEAD^:" + "src/main/java/" + filePathJava).start();
             process.waitFor();
             if (process.exitValue() == 0) {
                 StringBuilder content = new StringBuilder();
