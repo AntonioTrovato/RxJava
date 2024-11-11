@@ -226,7 +226,7 @@ tasks.register("fatJar", Jar) {
     }
 
     manifest {
-        attributes("Main-Class": "ASTGenerator") // Ensure the full name of the class is correct
+        attributes("Main-Class": "io.reactivex.rxjava3.ASTGenerator") // Ensure the full name of the class is correct
     }
 }
 
