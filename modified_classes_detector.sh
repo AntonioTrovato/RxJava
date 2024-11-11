@@ -171,7 +171,19 @@ for benchmark in "${benchmarks_to_run[@]}"; do
     java -jar build/libs/rxjava-3.0.0-SNAPSHOT-jmh.jar "$benchmark" -wi 2 -w 1 -i 2 -r 1 -f 2
 done
 
-git add "src/jmh/java"
+# Add to git all the benchmark classes generated/regenerated
+for class_name in "${class_names[@]}"; do
+  # Convert the class name to a file path
+  file_path="src/jmh/java/$(echo "$class_name" | tr '.' '/')".java
+
+  echo "Benchmark Class to Push in the Main Branch:"
+  echo "$file_path"
+
+  # Add the file to git
+  git add "$file_path"
+done
+
+git add "src/jmh/java/se/chalmers/ju2jmh/api/JU2JmhBenchmark.java"
 
 # Commit the changes
 git commit -m "Adding the Created Benchmark Classes to the Repository"
