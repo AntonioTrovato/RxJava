@@ -40,6 +40,7 @@ public final class ObservableFlatMap<T, U> extends AbstractObservableWithUpstrea
         this.delayErrors = delayErrors;
         this.maxConcurrency = maxConcurrency;
         this.bufferSize = bufferSize;
+        System.out.println("MODIFICATION");
     }
 
     @Override

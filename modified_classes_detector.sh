@@ -186,6 +186,6 @@ git commit -m "Adding the Created Benchmark Classes to the Repository"
 
 # Push the changes to the main branch using the token
 git remote set-url origin https://AntonioTrovato:${ACTIONS_TOKEN}@github.com/AntonioTrovato/RxJava.git
-git push origin main
+git push origin 3.x
 
 echo "DONE!"

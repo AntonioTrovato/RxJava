@@ -3,7 +3,7 @@ name: Build and Run Benchmark Tests
 on:
   push:
     branches:
-      - main  # Puoi modificare il nome del branch se necessario
+      - 3.x  # Puoi modificare il nome del branch se necessario
 
 jobs:
   build:

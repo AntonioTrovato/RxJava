@@ -1238,18 +1238,6 @@ public final class RxJavaPlugins {
     }
 
     /**
-     * Returns the current blocking handler or null if no custom handler
-     * is set.
-     * <p>History: 2.0.5 - experimental
-     * @return the current blocking handler or null if not specified
-     * @since 2.1
-     */
-    @Nullable
-    public static BooleanSupplier getOnBeforeBlocking() {
-        return onBeforeBlocking;
-    }
-
-    /**
      * Create an instance of the default {@link Scheduler} used for {@link Schedulers#computation()}
      * except using {@code threadFactory} for thread creation.
      * <p>History: 2.0.5 - experimental
@@ -1372,11 +1360,19 @@ public final class RxJavaPlugins {
      */
     @NonNull
     static Scheduler callRequireNonNull(@NonNull Supplier<Scheduler> s) {
+        System.out.println("MODIFICATION");
         try {
             return Objects.requireNonNull(s.get(), "Scheduler Supplier result can't be null");
         } catch (Throwable ex) {
             throw ExceptionHelper.wrapOrThrow(ex);
         }
+    }
+
+    /**
+     * javadoc
+     */
+    static void ciao() {
+        System.out.println("MODIFICATION");
     }
 
     /**

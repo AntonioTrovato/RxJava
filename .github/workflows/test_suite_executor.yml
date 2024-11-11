@@ -3,7 +3,7 @@ name: Scheduled Test Run
 on:
   push:
     branches:
-      - 3.x  # Puoi modificare il nome del branch se necessario
+      - main  # Puoi modificare il nome del branch se necessario
 
 jobs:
   run-tests:
