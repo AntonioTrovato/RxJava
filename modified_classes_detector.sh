@@ -143,7 +143,9 @@ printf '%s\n' "${class_names[@]}"
 echo "Class names written to $OUTPUT_FILE"
 
 # Make and build the benchmark classes
+echo "sono qui"
 java -jar ju-to-jmh/converter-all.jar src/test/java/ build/classes/java/test/ src/jmh/java/ --class-names-file=src/jmh/java/benchmark_classes_to_generate.txt
+echo "sono qui2"
 gradle jmhJar
 
 # List available benchmarks
