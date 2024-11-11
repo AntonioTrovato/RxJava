@@ -299,6 +299,7 @@ task buildWithoutTests {
         tasks.test.enabled = false
     }
 
+    dependsOn tasks.compileTestJava
     dependsOn tasks.assemble
     dependsOn tasks.checkstyleMain
     dependsOn tasks.fatJar
