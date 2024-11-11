@@ -1,0 +1,48 @@
+name: Build and Run Benchmark Tests
+
+on:
+  push:
+    branches:
+      - main  # Puoi modificare il nome del branch se necessario
+
+jobs:
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest  # Specifica il sistema operativo su cui eseguire l'azione
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2  # Azione per clonare il repository
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17.0.10'  # Specifica la versione di Java da utilizzare
+
+      - name: Setup Gradle
+        uses: eskatos/gradle-command-action@v1
+        with:
+          gradle-version: '7.6.4'  # Specifica la versione di Gradle da utilizzare
+
+      - name: Set execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Clean Project
+        run: ./gradlew clean
+
+      - name: Build Project
+        run: ./gradlew build
+
+      - name: Create the Fat Jar
+        run: ./gradlew fatJar
+
+      - name: Set execute permission for bash file
+        run: chmod +x modified_classes_detector.sh
+
+      - name: Run Modified Classes Detector
+        run: ./modified_classes_detector.sh  # Esegui lo script benchmark_tests.sh
+        env:
+          ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}

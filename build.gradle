@@ -41,17 +41,46 @@ dependencies {
     api "org.reactivestreams:reactive-streams:$reactiveStreamsVersion"
     jmh "org.reactivestreams:reactive-streams:$reactiveStreamsVersion"
 
+    implementation "com.github.javaparser:javaparser-core:3.24.4"
+
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
 
     testImplementation "org.reactivestreams:reactive-streams-tck:$reactiveStreamsVersion"
     testImplementation "org.testng:testng:$testNgVersion"
     testImplementation "com.google.guava:guava:$guavaVersion"
+
+    testImplementation "org.jacoco:org.jacoco.core:0.8.8"
+    testImplementation "org.jacoco:org.jacoco.agent:0.8.8"
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:2.13.3"
+
+    testImplementation "org.reflections:reflections:0.10.2"
+    testImplementation "ch.qos.logback:logback-classic:1.2.11"
+
+    // the dependencies used for testing must be replicated for jmh
+
+    jmhImplementation "junit:junit:$junitVersion"
+    jmhImplementation "org.mockito:mockito-core:$mockitoVersion"
+
+    jmhImplementation "org.reactivestreams:reactive-streams-tck:$reactiveStreamsVersion"
+    jmhImplementation "org.testng:testng:$testNgVersion"
+    jmhImplementation "com.google.guava:guava:$guavaVersion"
+
+    jmhImplementation "org.jacoco:org.jacoco.core:0.8.8"
+    jmhImplementation "org.jacoco:org.jacoco.agent:0.8.8"
+    jmhImplementation "com.fasterxml.jackson.core:jackson-databind:2.13.3"
+
+    jmhImplementation "org.reflections:reflections:0.10.2"
+    testImplementation "ch.qos.logback:logback-classic:1.2.11"
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jacoco {
+    toolVersion = "0.8.8"
 }
 
 tasks.withType(JavaCompile) {
@@ -133,6 +162,30 @@ jmh {
 
 test {
     maxHeapSize = "1200m"
+
+    useJUnit()
+
+    filter {
+        includeTestsMatching "io.reactivex.rxjava3.suite.MainSuiteTest"
+    }
+
+    // run the JaCoCo Agent
+    jacoco {
+        output = JacocoTaskExtension.Output.TCP_SERVER
+        address = "localhost"
+        jmx = true
+
+        // Exclude classes that are not in the 'app/java/main' package
+        excludes = [
+                "**/test/**",       // Exclude any test classes
+                "**/generated/**",  // Exclude generated classes, if any
+                "**/jmh/java/**",
+                "net/**",
+                "org/**",
+                "com/**",
+                "worker/**"
+        ]
+    }
 }
 
 task testNG(type: Test) {
@@ -158,6 +211,22 @@ tasks.withType(Test) {
 
     if (System.getenv("CI") == null) {
         maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    }
+}
+
+tasks.register("fatJar", Jar) {
+    group = "build"
+    archiveClassifier = "all"
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith("jar") }.collect { zipTree(it) }
+    }
+
+    manifest {
+        attributes("Main-Class": "ASTGenerator") // Ensure the full name of the class is correct
     }
 }
 
