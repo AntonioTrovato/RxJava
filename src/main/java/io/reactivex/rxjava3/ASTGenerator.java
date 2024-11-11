@@ -116,8 +116,8 @@ public class ASTGenerator {
             try {
                 CompilationUnit cu = javaParser.parse(file).getResult().orElse(null);
                 if (cu != null) {
-                    System.out.println("AST for " + version + " version of class: " + className);
-                    System.out.println(cu.toString());
+                    /*System.out.println("AST for " + version + " version of class: " + className);
+                    System.out.println(cu.toString());*/
                     methods.addAll(cu.findAll(MethodDeclaration.class));
                 } else {
                     System.out.println("Could not parse the " + version + " version file: " + filePath);
@@ -143,8 +143,8 @@ public class ASTGenerator {
         List<MethodDeclaration> methods = new ArrayList<>();
         CompilationUnit cu = javaParser.parse(content).getResult().orElse(null);
         if (cu != null) {
-            System.out.println("AST for " + version + " version of class: " + className);
-            System.out.println(cu.toString());
+            /*System.out.println("AST for " + version + " version of class: " + className);
+            System.out.println(cu.toString());*/
             methods.addAll(cu.findAll(MethodDeclaration.class));
         } else {
             System.out.println("Could not parse the " + version + " version content for class: " + className);
