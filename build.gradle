@@ -289,3 +289,17 @@ if (project.hasProperty("releaseMode")) {
     */
   }
 }
+
+task buildWithoutTests {
+    group = "build"
+    description = "Builds the project without running tests."
+
+    // Disable the test task for this buildWithoutTests task
+    doFirst {
+        tasks.test.enabled = false
+    }
+
+    dependsOn tasks.assemble
+    dependsOn tasks.checkstyleMain
+    dependsOn tasks.fatJar
+}

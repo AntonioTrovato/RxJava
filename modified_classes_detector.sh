@@ -6,6 +6,8 @@ git config --global user.name "AntonioTrovato"
 
 #TODO: CREA DELLE VARIABILI ALL'INIZIO DI QUESTO .SH IMPOSTABILI PER GENERALIZZARE L'USO DI QUESTO WORKFLOW
 
+#TODO: QUESTA ACTION NON DOVREBBE LANCIARE TUTTI I TEST DI UNITA' DA CAPO
+
 #TODO: JU2JMH SVUOTA LE CLASSI DI BENCHMARK NON
 #TODO: INTERESSATE DAL COMMIT (SE UNA CLASSE
 #TODO: DI BENCHMARK C'ERA LA SVUOTA, SE NON C'ERA
@@ -21,7 +23,7 @@ git config --global user.name "AntonioTrovato"
 # File paths
 MODIFIED_METHODS_FILE="modified_methods.txt"
 COVERAGE_MATRIX_FILE="coverage-matrix.json"
-OUTPUT_FILE="src/jmh/benchmark_classes_to_generate.txt"
+OUTPUT_FILE="src/jmh/java/benchmark_classes_to_generate.txt"
 
 # Read the hashes of the last two commits using git log
 current_commit=$(git log --format="%H" -n 1)
@@ -141,7 +143,7 @@ printf '%s\n' "${class_names[@]}"
 echo "Class names written to $OUTPUT_FILE"
 
 # Make and build the benchmark classes
-java -jar ju-to-jmh/converter-all.jar src/test/java/ build/classes/java/test/ src/jmh/java/ --class-names-file=src/jmh/benchmark_classes_to_generate.txt
+java -jar ju-to-jmh/converter-all.jar src/test/java/ build/classes/java/test/ src/jmh/java/ --class-names-file=src/jmh/java/benchmark_classes_to_generate.txt
 gradle jmhJar
 
 # List available benchmarks
