@@ -1372,6 +1372,7 @@ public final class RxJavaPlugins {
      */
     @NonNull
     static Scheduler callRequireNonNull(@NonNull Supplier<Scheduler> s) {
+        System.out.println("ciao");
         try {
             return Objects.requireNonNull(s.get(), "Scheduler Supplier result can't be null");
         } catch (Throwable ex) {
