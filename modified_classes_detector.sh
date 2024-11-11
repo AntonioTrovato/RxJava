@@ -172,7 +172,7 @@ for benchmark in "${benchmarks_to_run[@]}"; do
 done
 
 # Add to git all the benchmark classes generated/regenerated
-<< 'COMMENT'for class_name in "${class_names[@]}"; do
+<< 'COMMENT' for class_name in "${class_names[@]}"; do
   # Convert the class name to a file path
   file_path="src/jmh/java/$(echo "$class_name" | tr '.' '/')".java
 
