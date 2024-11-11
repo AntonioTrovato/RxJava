@@ -172,7 +172,7 @@ for benchmark in "${benchmarks_to_run[@]}"; do
 done
 
 # Add to git all the benchmark classes generated/regenerated
-for class_name in "${class_names[@]}"; do
+<< 'COMMENT'for class_name in "${class_names[@]}"; do
   # Convert the class name to a file path
   file_path="src/jmh/java/$(echo "$class_name" | tr '.' '/')".java
 
@@ -184,6 +184,9 @@ for class_name in "${class_names[@]}"; do
 done
 
 git add "src/jmh/java/se/chalmers/ju2jmh/api/JU2JmhBenchmark.java"
+COMMENT
+
+git add "src/jmh/java"
 
 # Commit the changes
 git commit -m "Adding the Created Benchmark Classes to the Repository"
